@@ -447,6 +447,11 @@ class EnrichedMarkdown(
       if (forceHeight || topologyChanged || heightBefore != heightAfter) {
         MeasurementStore.invalidate(id)
         requestLayout()
+        stateWrapper?.let {
+          val state = Arguments.createMap()
+          state.putInt("forceHeightRecalculationCounter", ++forceHeightRecalculationCounter)
+          it.updateState(state)
+        }
       }
     }
   }

@@ -22,8 +22,9 @@ void MarkdownContainerShadowNode::dirtyLayoutIfNeeded() {
   }
 }
 
-// Only new props change the rendered markdown. Yoga clones a node on every ancestor layout pass,
-// and dirtying those clones re-measures every settled message whenever the list above grows.
+// Only new props change the rendered markdown. When a parent is cloned, React Native's adoptYogaChild
+// re-clones its children without new props, and dirtying those clones re-measures every settled message
+// whenever the list above grows.
 bool MarkdownContainerShadowNode::shouldNewRevisionDirtyMeasurement(const ShadowNode & /*sourceShadowNode*/,
                                                                     const ShadowNodeFragment &fragment) const {
   return fragment.props != nullptr;
